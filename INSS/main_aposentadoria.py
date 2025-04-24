@@ -168,24 +168,25 @@ def main(page: ft.Page):
             if categoria.value == "idd":
                 if genero == Fem:
                     if pergunta < 62 or pergunta > 120 and contribuicao < 15:
-                        text_resultado.value = " Não tem direito ao INSS"
+                        diferenca_idd = abs(pergunta - 62)
+                        diferenca_contri = abs(contribuicao - 15)
+                        ano_atual = date.today().year
+                        previsao = abs(ano_atual + diferenca_idd) or abs(ano_atual + diferenca_contri)
+                        text_resultado.value = f'Não tem direito,a previsão da data é {previsao}'
                         page.update()
 
                     elif pergunta >= 62 or pergunta <= 120 and contribuicao >= 15:
                         text_resultado.value = "Tem direito ao INSS,o valor estimado é R$ {resultado}"
                         page.update()
 
-                    else:
-                        diferenca_idd = pergunta - 62
-                        diferenca_contri = contribuicao - 15
-                        ano_atual = date.today().year
-                        previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
-                        text_resultado.value  = f'A previsão da data é {previsao}'
-
 
                 elif genero == Masc:
                     if pergunta < 65 or pergunta > 120 and contribuicao < 15:
-                        text_resultado.value = "Não tem direito ao INSS"
+                        diferenca_idd = abs(pergunta - 62)
+                        diferenca_contri = abs(contribuicao - 15)
+                        ano_atual = date.today().year
+                        previsao = abs(ano_atual + diferenca_idd ) or abs( ano_atual + diferenca_contri)
+                        text_resultado.value = f'Não tem direito ao INSS,a previsão da data é {previsao}'
                         page.update()
 
                     elif pergunta >= 65 or pergunta < 120 and contribuicao >= 15:
@@ -193,17 +194,14 @@ def main(page: ft.Page):
                         text_resultado.value = f"O valor estimado é R$ {resultado}"
                         page.update()
 
-                    else:
-                        diferenca_idd = pergunta - 65
-                        diferenca_contri = contribuicao - 15
-                        ano_atual = date.today().year
-                        previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
-                        text_resultado.value = f'A previsão da data é {previsao}'
-
             elif categoria.value == "Contri":
                 if genero == Masc:
                     if contribuicao < 35 or contribuicao > 80:
-                        text_resultado.value = "Não tem direito ao INSS"
+                        diferenca_idd = abs(pergunta - 62)
+                        diferenca_contri = abs(contribuicao - 15)
+                        ano_atual = date.today().year
+                        previsao = abs(ano_atual + diferenca_idd) or abs(ano_atual + diferenca_contri)
+                        text_resultado.value = f'Não tem direito ao INSS,a previsão da data é {previsao}'
                         page.update()
 
                 elif genero == Masc:
@@ -212,12 +210,7 @@ def main(page: ft.Page):
                         text_resultado.value = f"O valor estimado é R${resultado}"
                         page.update()
 
-                else:
-                    diferenca_idd = pergunta - 65
-                    diferenca_contri = contribuicao - 15
-                    ano_atual = date.today().year
-                    previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
-                    text_resultado.value = f'A previsão da data é {previsao}'
+
 
             page.update()
             page.go("/resultado")
