@@ -176,7 +176,7 @@ def main(page: ft.Page):
                         page.update()
 
                     elif pergunta >= 62 or pergunta <= 120 and contribuicao >= 15:
-                        text_resultado.value = f"Tem direito ao INSS,o valor estimado é R$ {resultado}"
+                        text_resultado.value = f"Tem direito, R$ {resultado}"
                         page.update()
 
 
@@ -190,8 +190,7 @@ def main(page: ft.Page):
                         page.update()
 
                     elif pergunta >= 65 or pergunta < 120 and contribuicao >= 15:
-                        text_resultado.value = " Tem direiro ao INSS"
-                        text_resultado.value = f"O valor estimado é R$ {resultado}"
+                        text_resultado.value = " Tem direito, R$ {resultado}"
                         page.update()
 
             elif categoria.value == "Contri":
@@ -206,8 +205,7 @@ def main(page: ft.Page):
 
                 elif genero == Masc:
                     if contribuicao >= 35 or contribuicao <= 80:
-                        text_resultado.value = "Tem direito ao INSS"
-                        text_resultado.value = f"O valor estimado é R${resultado}"
+                        text_resultado.value = "Tem direito, R${resultado}"
                         page.update()
 
 
