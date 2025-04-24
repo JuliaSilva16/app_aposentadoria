@@ -176,7 +176,7 @@ def main(page: ft.Page):
                         page.update()
 
                     elif pergunta >= 62 or pergunta <= 120 and contribuicao >= 15:
-                        text_resultado.value = "Tem direito ao INSS,o valor estimado é R$ {resultado}"
+                        text_resultado.value = f"Tem direito ao INSS,o valor estimado é R$ {resultado}"
                         page.update()
 
 
