@@ -172,7 +172,7 @@ def main(page: ft.Page):
                         diferenca_contri = abs(contribuicao - 15)
                         ano_atual = date.today().year
                         previsao = abs(ano_atual + diferenca_idd) or abs(ano_atual + diferenca_contri)
-                        text_resultado.value = f'Não tem direito,a previsão da data é {previsao}'
+                        text_resultado.value = f'Não tem direito,a previsão é {previsao}'
                         page.update()
 
                     elif pergunta >= 62 or pergunta <= 120 and contribuicao >= 15:
@@ -186,11 +186,11 @@ def main(page: ft.Page):
                         diferenca_contri = abs(contribuicao - 15)
                         ano_atual = date.today().year
                         previsao = abs(ano_atual + diferenca_idd ) or abs( ano_atual + diferenca_contri)
-                        text_resultado.value = f'Não tem direito ao INSS,a previsão da data é {previsao}'
+                        text_resultado.value = f'Não tem direito,a previsão é {previsao}'
                         page.update()
 
                     elif pergunta >= 65 or pergunta < 120 and contribuicao >= 15:
-                        text_resultado.value = " Tem direito, R$ {resultado}"
+                        text_resultado.value = f"Tem direito, R$ {resultado}"
                         page.update()
 
             elif categoria.value == "Contri":
@@ -200,12 +200,12 @@ def main(page: ft.Page):
                         diferenca_contri = abs(contribuicao - 15)
                         ano_atual = date.today().year
                         previsao = abs(ano_atual + diferenca_idd) or abs(ano_atual + diferenca_contri)
-                        text_resultado.value = f'Não tem direito ao INSS,a previsão da data é {previsao}'
+                        text_resultado.value = f'Não tem direito ,a previsão é {previsao}'
                         page.update()
 
                 elif genero == Masc:
                     if contribuicao >= 35 or contribuicao <= 80:
-                        text_resultado.value = "Tem direito, R${resultado}"
+                        text_resultado.value = f"Tem direito, R${resultado}"
                         page.update()
 
 
