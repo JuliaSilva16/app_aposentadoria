@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 import flet as ft
 from flet import AppBar, ElevatedButton, Page, Text, View, colors
@@ -24,7 +24,7 @@ def main(page: ft.Page):
                     ElevatedButton(text="Simulção de aposentadoria", on_click=lambda _: page.go("/simulacao")),
                     ElevatedButton(text="Ver regras", on_click=lambda _: page.go("/regras")),
                 ],
-                bgcolor='#A0C3D9',
+                bgcolor='#d0e5f3',
                 vertical_alignment=MainAxisAlignment.CENTER,
                 horizontal_alignment=CrossAxisAlignment.CENTER,
             )
@@ -35,7 +35,7 @@ def main(page: ft.Page):
                 View(
                     "/simulacao",
                     [
-                        AppBar(title=Text("Simulação INSS"), bgcolor='#A9D5F0'),
+                        AppBar(title=Text("Simulação INSS"), bgcolor='#b1d9f0'),
                         Text("Requisitos Básicos do Sistema"),
                         Text(" Entradas do Usuário:\n\n"),
                         input_idade,
@@ -45,7 +45,7 @@ def main(page: ft.Page):
                         categoria,
                         ElevatedButton(text="Resultado", on_click=lambda _: aposentadoria_simulacao(e)),
                     ],
-                    bgcolor='#A0C3D9',
+                    bgcolor='#d0e5f3',
                     vertical_alignment=MainAxisAlignment.CENTER,
                     horizontal_alignment=CrossAxisAlignment.CENTER,
 
@@ -58,12 +58,12 @@ def main(page: ft.Page):
                 View(
                     "/",
                     [
-                        AppBar(title=Text("Resultado"), bgcolor=Colors.SECONDARY_CONTAINER),
+                        AppBar(title=Text("Resultado"), bgcolor='#b1d9f0'),
                         Text(" Resultado final\n\n"),
                         text_resultado,
                         ElevatedButton(text="Voltar", on_click=lambda _: page.go("/simulacao")),
                     ],
-                    bgcolor='#A0C3D9',
+                    bgcolor='#d0e5f3',
                     vertical_alignment=MainAxisAlignment.CENTER,
                     horizontal_alignment=CrossAxisAlignment.CENTER,
                 )
@@ -74,7 +74,7 @@ def main(page: ft.Page):
                 View(
                     "/regras",
                     [
-                        AppBar(title=Text("Regras do INSS"), bgcolor=Colors.SECONDARY_CONTAINER),
+                        AppBar(title=Text("Regras do INSS"), bgcolor='#b1d9f0'),
                         Text("Regras Básicas de Aposentadoria:"),
 
                         ft.Row(
@@ -101,7 +101,7 @@ def main(page: ft.Page):
                             ],
                             ),
                         ],
-                    bgcolor='#A0C3D9',
+                    bgcolor='#d0e5f3',
                     vertical_alignment=MainAxisAlignment.CENTER,
                     horizontal_alignment=CrossAxisAlignment.CENTER,
                     )
@@ -169,30 +169,55 @@ def main(page: ft.Page):
                 if genero == Fem:
                     if pergunta < 62 or pergunta > 120 and contribuicao < 15:
                         text_resultado.value = " Não tem direito ao INSS"
-                        text_resultado.value = f"O valor estimado é R${resultado}"
+                        page.update()
 
                     elif pergunta >= 62 or pergunta <= 120 and contribuicao >= 15:
-                        text_resultado.value = "Tem direito ao INSS"
-                        text_resultado.value = f"O valor estimado é R$ {resultado}"
+                        text_resultado.value = "Tem direito ao INSS,o valor estimado é R$ {resultado}"
+                        page.update()
+
+                    else:
+                        diferenca_idd = pergunta - 62
+                        diferenca_contri = contribuicao - 15
+                        ano_atual = date.today().year
+                        previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
+                        text_resultado.value  = f'A previsão da data é {previsao}'
+
 
                 elif genero == Masc:
                     if pergunta < 65 or pergunta > 120 and contribuicao < 15:
                         text_resultado.value = "Não tem direito ao INSS"
-                        text_resultado.value = f"O valor estimado é R$ {resultado}"
+                        page.update()
 
                     elif pergunta >= 65 or pergunta < 120 and contribuicao >= 15:
                         text_resultado.value = " Tem direiro ao INSS"
                         text_resultado.value = f"O valor estimado é R$ {resultado}"
+                        page.update()
+
+                    else:
+                        diferenca_idd = pergunta - 65
+                        diferenca_contri = contribuicao - 15
+                        ano_atual = date.today().year
+                        previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
+                        text_resultado.value = f'A previsão da data é {previsao}'
 
             elif categoria.value == "Contri":
                 if genero == Masc:
                     if contribuicao < 35 or contribuicao > 80:
                         text_resultado.value = "Não tem direito ao INSS"
+                        page.update()
 
                 elif genero == Masc:
                     if contribuicao >= 35 or contribuicao <= 80:
                         text_resultado.value = "Tem direito ao INSS"
                         text_resultado.value = f"O valor estimado é R${resultado}"
+                        page.update()
+
+                else:
+                    diferenca_idd = pergunta - 65
+                    diferenca_contri = contribuicao - 15
+                    ano_atual = date.today().year
+                    previsao = ano_atual + diferenca_idd or ano_atual + diferenca_contri
+                    text_resultado.value = f'A previsão da data é {previsao}'
 
             page.update()
             page.go("/resultado")
@@ -212,7 +237,8 @@ def main(page: ft.Page):
                 diferenca = (contribuicao_valor - 15) * 2
                 acrescentado = (salario  * diferenca) / 100
                 resultado = (media + acrescentado)
-                return resultado
+                text_resultado.value = resultado
+                page.update()
             else:
                 return media
 
